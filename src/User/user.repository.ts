@@ -9,9 +9,6 @@ export class UserRepository {
     }
 
     async getUsers() {
-        if (this.users == null) 
-            return console.log('No users found');
-        else
-            return this.users;
+        return this.users;
     }
 }

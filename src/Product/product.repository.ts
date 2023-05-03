@@ -11,9 +11,6 @@ export class ProductRepository {
 
     async getUsers() {
         // Get users from database
-        if (this.products == null) 
-            return console.log('No Products found');
-        else
-            return this.products;
+        return this.products;
     }
 }
