@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { v4 as uuid } from 'uuid';
 
 import { UserRepository } from "./user.repository";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { UserEntity } from "./user.entity";
 import { AllUsersDto } from "./dto/allUsers.dto";
+import { EditUserDto } from "./dto/editUser.dto";
 
 @Controller('/users')
 export class UserController {
@@ -35,5 +36,25 @@ export class UserController {
         );
 
         return listUser;
+    }
+
+    @Put('/:id')
+    async editUser(@Param('id') id: string, @Body() editData: EditUserDto) {
+        const editedUser = await this._userRepository.updateUser(id, editData);
+
+        return {
+            user : editedUser,
+            message: 'User edited successfully'
+        }
+    }
+
+    @Delete('/:id')
+    async deleteUser(@Param('id')id: string){
+        const userDeleted = await this._userRepository.deleteUser(id);
+
+        return {
+            user: userDeleted,
+            message: 'User deleted successfully'
+        }
     }
 }
